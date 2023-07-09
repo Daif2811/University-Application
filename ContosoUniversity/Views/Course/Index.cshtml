@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ContosoUniversity.Models.Course>
+
+@{
+    ViewBag.Title = "Courses";
+}
+<style>
+    .glyphicon-star {
+        color : gold;
+        text-shadow : 0 0 black;
+    }
+</style>
+<h2>Courses</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+@using (Html.BeginForm("Index", "Course"))
+    {
+        <p>
+            Find by Title : @Html.TextBox("searchTitle")
+            <input type="submit" value="Search" />
+        </p>
+
+}
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.CourseID)</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Credits)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Level)*@
+            @Html.ActionLink("Level" , "Index" , new {sort = ViewBag.SortByLevel })
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Rating)*@
+            @Html.ActionLink("Rating" , "Index" , new {sort = ViewBag.SortByRating })
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Department.Name)*@
+            Department
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.CourseID)</td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Credits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Level)
+        </td>
+        <td>
+            @for (int i = 0; i < (int)item.Rating; i++)
+            {
+               <span class="glyphicon glyphicon-star"></span> 
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.CourseID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.CourseID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CourseID })
+        </td>
+    </tr>
+}
+
+</table>
